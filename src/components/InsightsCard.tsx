@@ -1,8 +1,11 @@
-import { Sparkles } from 'lucide-react';
-import { sampleInsights } from '@/lib/sampleData';
 import { motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
+import { useExpenseStore, generateInsights } from '@/lib/expenseStore';
 
 const InsightsCard = () => {
+  const { spendingByCategory, totalSpending, budget, topCategory } = useExpenseStore();
+  const insights = generateInsights(spendingByCategory, totalSpending, budget, topCategory);
+
   return (
     <div className="glass-card p-6">
       <div className="flex items-center gap-2 mb-4">
@@ -12,7 +15,7 @@ const InsightsCard = () => {
         <h3 className="font-heading text-lg font-semibold text-foreground">AI Insights</h3>
       </div>
       <div className="space-y-3">
-        {sampleInsights.map((insight, i) => (
+        {insights.map((insight, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, x: 10 }}
